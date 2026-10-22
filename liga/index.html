@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Liga Altomira Pádel: clasificación, resultados, tabla de cruces y normas.">
+<title>Liga Altomira Pádel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@500;600&display=swap">
+<style>
+/* Concepto: marcador de liga sobre pista nocturna. Tres niveles, zona verde de ascenso y roja de descenso. */
+:root{
+  color-scheme:dark;
+  --deep:#050c18; --panel:rgba(4,12,26,.66); --rule:rgba(255,255,255,.14);
+  --line:#f6f9ff; --muted:#a8c0e6; --ball:#dcf53a; --turq:#2be0c8; --coral:#ff5d5d; --magenta:#ff4fb0;
+  --up:#55e08a; --down:#ff6f61;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif; --body:"Barlow","Segoe UI",system-ui,sans-serif;
+}
+html,body{min-height:100%}
+body{background:var(--deep);color:var(--line);font-family:var(--body);font-weight:500;font-size:16px;line-height:1.3;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--deep)}
+.bg i{position:absolute;inset:0;background:url("media/fondo.jpg") center 62%/cover no-repeat;filter:saturate(1.25) contrast(1.08)}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,8,18,.88) 0%,rgba(3,8,18,.7) 18%,rgba(3,10,22,.45) 40%,rgba(4,16,14,.5) 70%,rgba(22,120,40,.6) 100%)}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fila,.partido{animation:none!important}}
+.wrap{position:relative;z-index:1;max-width:2200px;margin:0 auto;padding-inline:clamp(16px,2.2vw,44px);padding-block:clamp(12px,1.8vh,28px);display:flex;flex-direction:column;gap:clamp(12px,1.8vh,22px);min-height:100%}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.marca{display:flex;align-items:center;gap:clamp(10px,1.2vw,22px);min-width:0}
+.marca img{width:clamp(70px,8vw,150px);height:auto;flex:none}
+.marca small{display:block;font-family:var(--display);font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--ball);font-size:clamp(.85rem,1.15vw,1.5rem)}
+h1{margin:0;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(2rem,4.4vw,5.2rem);line-height:.9;text-wrap:balance;text-shadow:0 2px 20px rgba(0,0,0,.65)}
+h1 em{font-style:normal;color:var(--ball)}
+.plazo{margin-top:.35em;color:var(--muted);font-size:clamp(.85rem,1.1vw,1.4rem)}
+.plazo b{color:var(--line)}
+.pj b{color:var(--line);font-weight:700}.pj.ok b{color:var(--up)}
+.fecha{display:block;text-align:center;color:var(--muted);font-size:clamp(.7rem,.85vw,1rem);margin-top:.15em}
+.meta{background:var(--panel);border-radius:999px;padding:.35em 1em;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--muted);font-size:clamp(.85rem,1.05vw,1.3rem)}
+button{cursor:pointer;font:inherit;color:var(--line);border:1px solid var(--rule);background:rgba(255,255,255,.08);border-radius:999px;padding:.4em 1.1em;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+button:hover{border-color:var(--line)}
+button:focus-visible{outline:3px solid var(--ball);outline-offset:2px}
+.divs{display:flex;flex-wrap:wrap;gap:8px}
+.divs button{font-size:clamp(1.1rem,2vw,2.2rem);padding:.3em 1.1em}
+.divs button[aria-selected="true"]{background:var(--ball);border-color:var(--ball);color:var(--deep)}
+.aviso{display:inline-block;border:1px dashed var(--ball);color:var(--ball);border-radius:8px;padding:.1em .6em;font-size:.9em}
+main{display:grid;gap:clamp(12px,1.6vw,26px);min-width:0;flex:1}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(10px,1.2vw,22px);backdrop-filter:blur(6px);min-width:0;display:flex;flex-direction:column;gap:6px}
+h2{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:clamp(.95rem,1.25vw,1.6rem);color:var(--muted)}
+.cab{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;padding-bottom:8px;border-bottom:3px solid var(--line)}
+.cab strong{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,3vw,3.4rem);line-height:1}
+.fila{display:grid;grid-template-columns:clamp(2.6rem,3.6vw,4.6rem) minmax(0,1fr) repeat(4,clamp(2.6rem,3.6vw,4.6rem)) clamp(3.4rem,4.8vw,6rem);align-items:center;gap:clamp(4px,.6vw,12px);padding:clamp(6px,.8vh,12px) 6px;border-bottom:1px solid var(--rule);border-left:6px solid transparent;font-variant-numeric:tabular-nums;animation:entra .5s both}
+.fila.th{animation:none;color:var(--muted);font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;font-size:clamp(.75rem,.95vw,1.15rem)}
+.fila>.n{text-align:right}
+.fila.sube{border-left-color:var(--up);background:linear-gradient(90deg,rgba(85,224,138,.16),transparent 55%)}
+.fila.baja{border-left-color:var(--down);background:linear-gradient(90deg,rgba(255,111,97,.16),transparent 55%)}
+.pos{font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,2.4vw,3rem);line-height:1;text-align:center}
+.sube .pos{color:var(--up)}.baja .pos{color:var(--down)}
+.nom{font-weight:600;font-size:clamp(1.05rem,1.6vw,2rem);line-height:1.1;overflow-wrap:anywhere;min-width:0}
+.num{font-size:clamp(1rem,1.4vw,1.7rem);color:var(--muted)}
+.pts{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,2.7vw,3.4rem);line-height:1;color:var(--ball)}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 18px;padding-top:8px;color:var(--muted);font-size:clamp(.8rem,1vw,1.2rem)}
+.leyenda b{display:inline-block;width:.9em;height:.9em;border-radius:3px;margin-right:.4em;vertical-align:-.08em}
+.reserva{padding:clamp(6px,.9vh,12px) 4px;border-bottom:1px solid var(--rule);animation:entra .5s both;display:flex;flex-direction:column;gap:2px}
+.reserva:last-child{border-bottom:0}
+.reserva .fecha{text-align:left;margin:0 0 2px}
+.partido{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:clamp(6px,1vw,16px)}
+.par{font-size:clamp(.9rem,1.15vw,1.5rem);line-height:1.15;overflow-wrap:anywhere;min-width:0;color:var(--muted)}
+.par.b{text-align:right}
+.par.gana{color:var(--line);font-weight:600}
+.res{font-family:var(--display);font-weight:900;font-size:clamp(1.1rem,1.6vw,2rem);white-space:nowrap;text-align:center;color:var(--ball)}
+.res.pend{color:var(--muted);font-weight:700;font-size:clamp(.85rem,1vw,1.2rem);letter-spacing:.12em;text-transform:uppercase}
+.vacio{margin:auto;text-align:center;color:var(--muted);padding:1.6em 0}
+.vacio b{display:block;color:var(--line);font-family:var(--display);font-size:1.8rem;text-transform:uppercase}
+.pie{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(10px,1.1vw,20px) clamp(14px,1.6vw,28px);display:flex;flex-wrap:wrap;gap:10px 36px;align-items:center;justify-content:space-between;font-size:clamp(.9rem,1.1vw,1.4rem)}
+.pie p{margin:0;min-width:0}
+.pie code{font-family:var(--body);background:rgba(255,255,255,.1);border-radius:8px;padding:.15em .5em;color:var(--line);overflow-wrap:anywhere}
+.reglas{display:flex;flex-wrap:wrap;gap:6px 18px}
+.reglas b{font-family:var(--display);font-weight:900;font-size:1.4em;color:var(--ball);margin-right:.3em}
+@media (orientation:landscape) and (min-width:1000px){main{grid-template-columns:1.25fr 1fr}}
+@media (max-width:560px){.fila{grid-template-columns:2.4rem minmax(0,1fr) 2.2rem 2.2rem 3rem}.fila .x{display:none}}
+@media (orientation:portrait) and (min-width:700px) and (min-height:1000px){
+  h1{font-size:8.4vw}.marca small{font-size:2.4vw}.marca img{width:17vw}.meta{font-size:2vw}h2{font-size:2.3vw}
+  .divs button{font-size:3.4vw}.cab strong{font-size:5.4vw}
+  .fila{grid-template-columns:7vw minmax(0,1fr) repeat(4,6.4vw) 9vw}.fila.th{font-size:1.9vw}
+  .pos{font-size:4.2vw}.nom{font-size:3vw}.num{font-size:2.5vw}.pts{font-size:4.8vw}.leyenda{font-size:1.8vw}
+  .par{font-size:2.6vw}.res{font-size:3.4vw}.res.pend{font-size:1.8vw}.pie{font-size:2vw}
+}
+:fullscreen #btnFull{display:none}
+.buscar{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(12px,1.4vw,22px);backdrop-filter:blur(6px);display:flex;flex-direction:column;gap:10px;min-width:0}
+.buscar label{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:clamp(1.1rem,1.5vw,1.8rem)}
+.bq{display:flex;gap:8px;flex-wrap:wrap}
+.bq input{flex:1 1 220px;min-width:0;font:inherit;font-size:clamp(1rem,1.2vw,1.4rem);color:var(--line);background:rgba(255,255,255,.08);border:1px solid var(--rule);border-radius:999px;padding:.55em 1em}
+.bq input::placeholder{color:var(--muted)}
+.bq input:focus-visible{outline:3px solid var(--ball);outline-offset:2px}
+.yoinfo{display:flex;flex-direction:column;gap:10px;font-size:clamp(.95rem,1.1vw,1.35rem)}
+.yoinfo .tit{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(1.5rem,2.4vw,2.8rem);line-height:1}
+.yoinfo .tit small{display:block;font-size:.5em;letter-spacing:.14em;color:var(--muted);font-weight:700;margin-top:.2em}
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.datos div{background:rgba(255,255,255,.06);border-radius:14px;padding:8px 12px;color:var(--muted)}
+.datos b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,2.4vw,2.6rem);line-height:1;color:var(--ball)}
+.lst{margin:0;line-height:1.5}.lst b{color:var(--line)}
+.lst .ok{color:var(--up)}.lst .no{color:var(--down)}.lst .gr{color:var(--muted)}
+.alerta{border:1px dashed var(--ball);color:var(--ball);border-radius:12px;padding:.5em .8em;margin:0}
+.fila.mia{outline:3px solid var(--ball);outline-offset:-3px;border-radius:10px}
+.fila.mia .nom{color:var(--ball)}
+table.cruce tr.mia td{box-shadow:inset 0 3px var(--ball),inset 0 -3px var(--ball)}
+table.cruce tr.mia td:first-child{color:var(--ball)}
+table.cruce th.mia{color:var(--ball)}
+.par.mio{color:var(--ball);font-weight:700}
+details.his summary{cursor:pointer;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(1rem,1.3vw,1.6rem);color:var(--ball);padding:.3em 0;list-style-position:inside}
+details.his summary:focus-visible{outline:3px solid var(--ball);outline-offset:2px;border-radius:6px}
+.hist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:10px;margin-top:10px}
+.hist .reserva{background:rgba(255,255,255,.05);border-radius:14px;padding:10px 12px;border-bottom:0}
+.hist .reserva .fecha b{color:var(--line)}
+.solo{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:clamp(.9rem,1.05vw,1.25rem);cursor:pointer}
+.solo input{width:1.2em;height:1.2em;accent-color:var(--ball)}
+.bloque{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(12px,1.4vw,26px);backdrop-filter:blur(6px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.bloque .cab strong{font-size:clamp(1.6rem,3vw,3.4rem)}
+.bloque .intro{margin:0;color:var(--muted);font-size:clamp(.95rem,1.15vw,1.4rem);max-width:80ch}
+.normas{counter-reset:n;list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(8px,1vw,16px)}
+.normas li{counter-increment:n;background:rgba(255,255,255,.05);border:1px solid var(--rule);border-radius:16px;padding:14px 14px 14px clamp(54px,4.4vw,74px);position:relative;min-width:0;font-size:clamp(.92rem,1.05vw,1.3rem)}
+.normas li::before{content:counter(n);position:absolute;left:14px;top:8px;font-family:var(--display);font-weight:900;font-size:clamp(2rem,2.6vw,3rem);line-height:1;color:var(--ball)}
+.normas b{display:block;font-family:var(--display);text-transform:uppercase;font-weight:800;font-size:1.25em;letter-spacing:.03em;line-height:1.05;margin-bottom:4px;color:var(--line)}
+.normas span{color:var(--muted)}
+.plant{background:rgba(0,0,0,.35);border-radius:10px;padding:8px 10px;margin-top:8px;color:var(--line);white-space:pre-line;font-family:ui-monospace,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere}
+.tw{overflow-x:auto}
+table.cruce{border-collapse:separate;border-spacing:3px;width:100%;min-width:640px;font-variant-numeric:tabular-nums;font-size:clamp(.85rem,1vw,1.25rem)}
+table.cruce th{font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700;padding:6px 4px;line-height:1.1;text-align:center}
+table.cruce td{text-align:center;padding:7px 4px;border-radius:8px}
+table.cruce th:first-child,table.cruce td:first-child{text-align:left;white-space:nowrap;font-weight:600;color:var(--line)}
+table.cruce td.c{font-family:var(--display);font-weight:900;font-size:1.35em}
+td.c0{color:var(--muted)}td.c1{background:rgba(85,224,138,.18);color:var(--up)}td.c2{background:rgba(220,245,58,.2);color:var(--ball)}td.c3{background:rgba(255,111,97,.26);color:var(--down)}
+td.yo{background:repeating-linear-gradient(45deg,transparent 0 4px,rgba(255,255,255,.07) 4px 8px)}
+.ley{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:clamp(.85rem,1vw,1.2rem)}
+.ley i{display:inline-block;width:.9em;height:.9em;border-radius:3px;vertical-align:-.08em;margin-right:.4em}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><i></i></div>
+<div class="wrap">
+  <header>
+    <div class="marca">
+      <img alt="Altomira Pádel VIP" src="data:image/webp;base64,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">
+      <div><small>Altomira Pádel VIP</small><h1>Liga <em id="temp"></em></h1><div class="plazo" id="plazo"></div></div>
+    </div>
+    <div class="meta"><span id="act"></span><span class="aviso" id="demo" hidden>Datos de ejemplo</span><button type="button" id="btnFull">Pantalla completa</button></div>
+  </header>
+  <section class="buscar" aria-label="Busca tu nombre">
+    <label for="q">Busca tu nombre</label>
+    <div class="bq"><input id="q" list="qlist" placeholder="Escribe tu nombre…" autocomplete="off" enterkeyhint="search"><button type="button" id="qx" hidden>Quitar</button></div>
+    <datalist id="qlist"></datalist>
+    <div class="yoinfo" id="yoInfo" aria-live="polite" hidden></div>
+  </section>
+  <div class="divs" id="divs" role="tablist" aria-label="Nivel"></div>
+  <main>
+    <section class="panel">
+      <div class="cab"><strong id="dNom"></strong><h2 id="dInfo"></h2></div>
+      <div class="fila th"><div>Pos</div><div>Jugador</div><div class="n">PJ</div><div class="n">Minis</div><div class="n x">Dif</div><div class="n x">Media</div><div class="n">Juegos</div></div>
+      <div id="tabla"></div>
+      <div class="leyenda" id="leyenda"></div>
+    </section>
+    <section class="panel">
+      <div class="cab"><strong>Últimos resultados</strong><h2 id="jInfo"></h2></div>
+      <div id="partidos"></div>
+    </section>
+  </main>
+  <section class="bloque" aria-labelledby="hisTit">
+    <div class="cab"><strong id="hisTit">Todos los resultados</strong><h2 id="hisInfo"></h2></div>
+    <label class="solo" id="soloW" hidden><input type="checkbox" id="solo" checked> Solo mis partidos</label>
+    <details class="his" id="hisDet"><summary id="hisSum">Ver todos los partidos</summary><div class="hist" id="hist"></div></details>
+  </section>
+  <section class="bloque" aria-labelledby="cruTit">
+    <div class="cab"><strong id="cruTit">Tabla de cruces</strong><h2 id="cruInfo"></h2></div>
+    <p class="intro">Cuántos partidos has compartido con cada jugador de tu nivel. Busca tu fila antes de organizar un partido: con quien estés en rojo ya no puedes coincidir.</p>
+    <div class="ley"><span><i style="background:rgba(85,224,138,.5)"></i>1 vez</span><span><i style="background:rgba(220,245,58,.55)"></i>2 veces: os queda una</span><span><i style="background:rgba(255,111,97,.6)"></i>3 veces: no podéis coincidir más</span></div>
+    <div class="tw" id="cruce"></div>
+  </section>
+  <section class="bloque" aria-labelledby="norTit">
+    <div class="cab"><strong id="norTit">Normas de la liga</strong><h2>Léelas antes de jugar</h2></div>
+    <ol class="normas">
+      <li><b>8 jugadores por nivel</b><span>Nivel avanzado, nivel medio y nivel iniciación. Liga individual: cada jugador suma sus propios juegos.</span></li>
+      <li><b>5 partidos obligatorios</b><span>Cada jugador tiene que jugar obligatoriamente 5 partidos, del 2 de noviembre al 21 de diciembre. Son de hora y media, con jugadores de tu mismo nivel, cuando y con quien quieras. Los que no juegues cuentan como 0 juegos.</span></li>
+      <li><b>3 mini partidos en cada partido</b><span>Se rota la pareja: AB contra CD, AC contra BD y AD contra BC. Así juegas una vez con cada uno de los otros tres.</span></li>
+      <li><b>10 juegos con punto de oro</b><span>Cada mini partido se juega a 10 juegos exactos (6-4, 7-3, 5-5…). En 40-40, punto de oro y elige el lado la pareja que resta. Empezad puntuales: son 30 juegos en hora y media.</span></li>
+      <li><b>Máximo 3 partidos con el mismo jugador</b><span>Mira la tabla de cruces antes de organizar un partido. Si entre los cuatro hay una casilla en rojo, buscad a otro jugador.</span></li>
+      <li><b>No se repite el mismo grupo de cuatro</b><span>Los mismos cuatro jugadores solo pueden jugar juntos un partido en toda la liga.</span></li>
+      <li><b>Mínimo 2 partidos antes del 30 de noviembre</b><span>Para que la liga avance a buen ritmo. Lo que no se juegue antes del 21 de diciembre no suma.</span></li>
+      <li><b>Si alguien no se presenta</b><span>Pierde sus tres mini partidos 0-10 y los otros tres jugadores se llevan esos juegos.</span></li>
+      <li><b>Clasificación</b><span>Manda el total de juegos ganados. Si hay empate: más mini partidos ganados y después mejor diferencia de juegos. Suben los 2 primeros y bajan los 2 últimos de cada nivel.</span></li>
+      <li><b>Partidos que no cumplan</b><span>Un partido que incumpla las normas no cuenta hasta que el club la revise. La decisión del club es final.</span></li>
+      <li><b>Cierre</b><span>22 y 23 de diciembre: clasificación final y anuncio de ascensos y descensos para la siguiente liga.</span></li>
+    </ol>
+  </section>
+  <footer class="pie">
+    <div class="reglas" id="reglas"></div>
+  </footer>
+</div>
+
+<script>
+const D={"liga": {"temporada": "Nov–Dic 2026", "plazo": "del 2 de noviembre al 21 de diciembre", "updated": "2026-10-21T13:35:00+02:00", "demo": false}, "reglas": {"partidos": 5, "suben": 2, "bajan": 2}, "divisiones": [{"id": "2", "nombre": "Nivel avanzado", "jugadores": []}, {"id": "3", "nombre": "Nivel medio", "jugadores": []}, {"id": "4", "nombre": "Nivel iniciación", "jugadores": []}], "partidos": []};
+const $=id=>document.getElementById(id);
+const h=(t,p,...k)=>{const e=document.createElement(t);Object.assign(e,p||{});k.flat().forEach(x=>x!=null&&e.append(x));return e};
+let di=0,pausa=0,yo=null;
+const norm=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const TODOS=D.divisiones.flatMap((d,i)=>d.jugadores.map(n=>({n,i})));
+function busca(t){const q=norm(t);if(!q)return null;const ex=TODOS.find(p=>norm(p.n)===q);if(ex)return ex;const m=TODOS.filter(p=>norm(p.n).includes(q));return m.length===1?m[0]:null}
+function elige(p){yo=p?p.n:null;if(p)di=p.i;try{p?localStorage.setItem('ligaYo',p.n):localStorage.removeItem('ligaYo')}catch(e){}$('qx').hidden=!yo;$('soloW').hidden=!yo;if(yo){$('q').value=yo;$('solo').checked=true;$('hisDet').open=true}pinta()}
+const lista=(arr,cls)=>arr.flatMap((n,k)=>[k?', ':'',h('b',{className:cls||'',textContent:n})]);
+function clasif(dv){
+  const S={};dv.jugadores.forEach(n=>S[n]={n,pj:0,jg:0,jp:0,mg:0});
+  D.partidos.filter(p=>p.div===dv.id).sort((x,y)=>String(x.fecha).localeCompare(String(y.fecha))).forEach(p=>{
+    const quien=[...new Set(p.minis.flatMap(m=>m.a.concat(m.b)))].filter(n=>S[n]&&S[n].pj<D.reglas.partidos);
+    quien.forEach(n=>S[n].pj++);
+    p.minis.forEach(m=>{[[m.a,m.ja,m.jb],[m.b,m.jb,m.ja]].forEach(([par,g,q])=>par.forEach(n=>{if(!quien.includes(n))return;const s=S[n];s.jg+=g;s.jp+=q;if(g>q)s.mg++}))})});
+  return Object.values(S).sort((x,y)=>y.jg-x.jg||y.mg-x.mg||(y.jg-y.jp)-(x.jg-x.jp)||x.n.localeCompare(y.n,'es'));
+}
+const sg=n=>(n>0?'+':'')+n;
+const fmt=f=>{const d=new Date(f);return isNaN(d)?'':d.toLocaleDateString('es-ES',{day:'numeric',month:'short'})};
+function pinta(){
+  const dv=D.divisiones[di];if(!dv)return;
+  $('divs').replaceChildren(...D.divisiones.map((d,i)=>{const b=h('button',{type:'button',textContent:d.nombre,onclick:()=>{di=i;pausa=Date.now()+60000;pinta()}});b.setAttribute('role','tab');b.setAttribute('aria-selected',i===di);return b}));
+  const L=clasif(dv),sub=di>0?D.reglas.suben:0,baj=di<D.divisiones.length-1?D.reglas.bajan:0,N=D.reglas.partidos;
+  $('dNom').textContent=dv.nombre;$('dInfo').textContent=L.length+(L.length===1?' jugador':' jugadores');
+  $('tabla').replaceChildren(...(L.length?L.map((s,i)=>{const z=i<sub?' sube':i>=L.length-baj?' baja':'';const f=h('div',{className:'fila'+z+(s.n===yo?' mia':'')},h('div',{className:'pos',textContent:i+1}),h('div',{className:'nom',textContent:s.n}),
+      h('div',{className:'n num pj'+(s.pj>=N?' ok':'')},h('b',{textContent:s.pj}),'/'+N),h('div',{className:'n num',textContent:s.mg}),h('div',{className:'n num x',textContent:sg(s.jg-s.jp)}),h('div',{className:'n num x',textContent:s.pj?(s.jg/s.pj).toFixed(1).replace('.',','):'–'}),h('div',{className:'n pts',textContent:s.jg}));f.style.animationDelay=i*40+'ms';return f})
+    :[h('div',{className:'vacio'},h('b',{textContent:'Sin jugadores todavía'}),'La clasificación aparecerá cuando se cierre la lista de '+dv.nombre+'.')]));
+  $('leyenda').replaceChildren(...[sub?['var(--up)','Ascienden los '+sub+' primeros']:null,baj?['var(--down)','Descienden los '+baj+' últimos']:null].filter(Boolean).map(([c,t])=>{const b=h('b');b.style.background=c;return h('span',{},b,t)}));
+  const P=D.partidos.filter(p=>p.div===dv.id).sort((x,y)=>String(y.fecha).localeCompare(String(x.fecha))),ult=P.slice(0,3);
+  $('jInfo').textContent=P.length?P.length+(P.length===1?' partido jugado':' partidos jugados'):'';
+  $('partidos').replaceChildren(...(ult.length?ult.map((p,i)=>{const e=h('div',{className:'reserva'},h('span',{className:'fecha',textContent:fmt(p.fecha)}),
+      ...p.minis.map(m=>h('div',{className:'partido'},h('div',{className:'par a'+(m.ja>m.jb?' gana':'')},m.a.join(' y ')),h('div',{className:'res',textContent:m.ja+'-'+m.jb}),h('div',{className:'par b'+(m.jb>m.ja?' gana':'')},m.b.join(' y ')))));e.style.animationDelay=i*60+'ms';return e})
+    :[h('div',{className:'vacio'},h('b',{textContent:'Aún no hay partidos'}),'Los resultados aparecerán aquí en cuanto se jueguen.')]));
+  const J=dv.jugadores,C={},R={};J.forEach(a=>{C[a]={};R[a]=0});
+  P.forEach(p=>{const ps=[...new Set(p.minis.flatMap(m=>m.a.concat(m.b)))].filter(n=>C[n]);ps.forEach(a=>{R[a]++;ps.forEach(b=>{if(a!==b)C[a][b]=(C[a][b]||0)+1})})});
+  $('cruTit').textContent='Tabla de cruces · '+dv.nombre;$('cruInfo').textContent='Máximo 3 con el mismo jugador';
+  $('cruce').replaceChildren(J.length?h('table',{className:'cruce'},h('thead',{},h('tr',{},h('th',{textContent:'Jugador'}),...J.map(n=>h('th',{scope:'col',className:n===yo?'mia':'',textContent:n})),h('th',{textContent:'Partidos'}))),
+    h('tbody',{},...J.map(a=>h('tr',{className:a===yo?'mia':''},h('td',{textContent:a}),...J.map(b=>{if(a===b)return h('td',{className:'yo'});const v=Math.min(C[a][b]||0,3);return h('td',{className:'c c'+v,textContent:(C[a][b]||0)||'·'})}),h('td',{textContent:R[a]+'/'+N})))))
+    :h('div',{className:'vacio'},h('b',{textContent:'Sin jugadores todavía'}),'La tabla aparecerá cuando se cierre la lista de '+dv.nombre+'.'));
+  // historial
+  const mio=yo&&J.includes(yo)&&$('solo').checked;
+  const PH=P.filter(p=>!mio||p.minis.some(m=>m.a.concat(m.b).includes(yo)));
+  $('hisTit').textContent='Todos los resultados · '+dv.nombre;
+  $('hisInfo').textContent=P.length?P.length+(P.length===1?' partido':' partidos'):'';
+  $('hisSum').textContent=mio?'Ver mis '+PH.length+(PH.length===1?' partido':' partidos'):'Ver los '+P.length+(P.length===1?' partido':' partidos')+' de '+dv.nombre;
+  $('hist').replaceChildren(...(PH.length?PH.map(p=>h('div',{className:'reserva'},h('span',{className:'fecha'},h('b',{textContent:'Partido '+(P.length-P.indexOf(p))}),' · '+fmt(p.fecha)),
+      ...p.minis.map(m=>h('div',{className:'partido'},h('div',{className:'par a'+(m.ja>m.jb?' gana':'')+(m.a.includes(yo)?' mio':'')},m.a.join(' y ')),h('div',{className:'res',textContent:m.ja+'-'+m.jb}),h('div',{className:'par b'+(m.jb>m.ja?' gana':'')+(m.b.includes(yo)?' mio':'')},m.b.join(' y '))))))
+    :[h('div',{className:'vacio'},h('b',{textContent:'Aún no hay partidos'}),mio?'Todavía no has jugado ningún partido.':'Los resultados aparecerán aquí en cuanto se jueguen.')]));
+  // ficha del jugador
+  const ys=yo&&J.includes(yo)?L.find(s=>s.n===yo):null;$('yoInfo').hidden=!ys;
+  if(ys){const pos=L.indexOf(ys)+1,falta=Math.max(0,N-R[yo]),otros=J.filter(b=>b!==yo);
+    const libres=otros.filter(b=>(C[yo][b]||0)<3&&R[b]<N),llenos=otros.filter(b=>(C[yo][b]||0)>=3),acab=otros.filter(b=>(C[yo][b]||0)<3&&R[b]>=N);
+    const hoy=new Date(),lim=new Date(2026,10,30,23,59);
+    const kids=[h('div',{className:'tit',textContent:yo},h('small',{textContent:dv.nombre})),
+      h('div',{className:'datos'},h('div',{},h('b',{textContent:pos+'º'}),'Puesto'),h('div',{},h('b',{textContent:R[yo]+'/'+N}),'Partidos'),h('div',{},h('b',{textContent:ys.jg}),'Juegos'),h('div',{},h('b',{textContent:ys.mg}),'Minis ganados')),
+      h('p',{className:'lst'},falta?h('b',{textContent:'Te '+(falta===1?'queda 1 partido':'quedan '+falta+' partidos')+'. '}):h('b',{className:'ok',textContent:'Has completado tus '+N+' partidos. '}))];
+    if(falta&&hoy<=lim&&R[yo]<2)kids.push(h('p',{className:'alerta',textContent:'Antes del 30 de noviembre tienes que llevar al menos 2 partidos.'}));
+    if(falta)kids.push(h('p',{className:'lst'},'Aún puedes jugar con: ',...(libres.length?lista(libres.map(b=>b+' ('+(C[yo][b]||0)+')'),'ok'):[h('b',{textContent:'nadie con partidos pendientes'})])));
+    if(llenos.length)kids.push(h('p',{className:'lst'},'Ya no puedes coincidir con: ',...lista(llenos,'no')));
+    if(falta&&acab.length)kids.push(h('p',{className:'lst gr'},'Ya han terminado sus partidos: ',...lista(acab,'gr')));
+    if(falta)kids.push(h('p',{className:'lst gr',textContent:'Entre paréntesis, las veces que ya habéis coincidido (máximo 3).'}));
+    $('yoInfo').replaceChildren(...kids)}
+}
+$('temp').textContent=D.liga.temporada||'';
+if(D.liga.updated){const f=new Date(D.liga.updated);if(!isNaN(f))$('act').textContent='Actualizado el '+f.toLocaleDateString('es-ES',{day:'numeric',month:'long'})+' a las '+f.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}
+$('demo').hidden=!D.liga.demo;
+$('reglas').replaceChildren(...[['+1','por cada juego ganado'],['30','juegos en juego por partido']].map(([a,b])=>h('span',{},h('b',{textContent:a}),b)));
+if(D.liga.plazo)$('plazo').replaceChildren(h('b',{textContent:D.reglas.partidos+' partidos'}),' por jugador, 3 mini partidos en cada uno · '+D.liga.plazo);
+let lock=null;
+$('btnFull').onclick=()=>{document.documentElement.requestFullscreen?.().catch(()=>{});navigator.wakeLock?.request('screen').then(l=>lock=l).catch(()=>{})};
+setInterval(()=>{if(!document.fullscreenElement||yo||document.hidden||Date.now()<pausa||D.divisiones.length<2)return;di=(di+1)%D.divisiones.length;pinta()},14000);
+$('qlist').replaceChildren(...TODOS.map(p=>h('option',{value:p.n})));
+$('q').addEventListener('input',e=>{const p=busca(e.target.value);if(p&&p.n!==yo)elige(p)});
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter'){const p=busca(e.target.value);if(p)elige(p)}});
+$('qx').onclick=()=>{$('q').value='';elige(null);$('q').focus()};
+$('solo').onchange=pinta;
+let ini=null;try{ini=localStorage.getItem('ligaYo')}catch(e){}
+const p0=ini&&TODOS.find(p=>p.n===ini);if(p0)elige(p0);else pinta();
+if(!TODOS.length)document.querySelector('.buscar').hidden=true;
+</script>
+
+</body>
+</html>
