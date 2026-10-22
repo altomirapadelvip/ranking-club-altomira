@@ -1,0 +1,351 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ranking Altomira Pádel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+/* Concepto: marcador de club sobre pista de pádel nocturna. Azul de moqueta como fondo,
+   líneas blancas de pista, y cuatro colores vivos (pelota, coral, turquesa, magenta) para premios y podio. */
+:root{
+  color-scheme:dark;
+  --court:#0b3f86; --deep:#050c18; --panel:rgba(4,12,26,.62); --rule:rgba(255,255,255,.14);
+  --line:#f6f9ff; --muted:#a8c0e6;
+  --ball:#dcf53a; --coral:#ff5d5d; --turq:#2be0c8; --magenta:#ff4fb0;
+  --oro:#ffd447; --plata:#dfe7f2; --bronce:#ff9d57; --up:#63e894; --down:#ff7d70;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Barlow","Segoe UI",system-ui,sans-serif;
+}
+html,body{min-height:100%}
+body{background:var(--deep);color:var(--line);font-family:var(--body);font-weight:500;font-size:16px;line-height:1.3;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--deep)}
+.bg .foto{position:absolute;inset:0;background:url("media/fondo.jpg") center 62%/cover no-repeat;filter:saturate(1.25) contrast(1.08)}
+.bg::after{content:"";position:absolute;inset:0;background:
+   radial-gradient(34% 20% at 78% 4%,rgba(255,255,255,.55),rgba(190,225,255,.16) 45%,transparent 72%),
+   linear-gradient(180deg,rgba(3,8,18,.86) 0%,rgba(3,8,18,.7) 16%,rgba(3,10,22,.4) 36%,rgba(4,16,14,.42) 68%,rgba(22,120,40,.62) 100%)}
+header .golpe{width:clamp(90px,12vw,210px);height:auto;flex:none;overflow:hidden;border-radius:0 0 40% 0}
+@media (max-width:699px){header .golpe{display:none}}
+
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,18,48,.10),rgba(4,18,48,.5))}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fila,.podio .c,.premio{animation:none!important}}
+
+.wrap{position:relative;z-index:1;max-width:2200px;margin:0 auto;padding-inline:clamp(16px,2.2vw,44px);padding-block:clamp(12px,1.8vh,28px);display:flex;flex-direction:column;gap:clamp(12px,1.8vh,24px)}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.marca{display:flex;align-items:center;gap:clamp(10px,1.2vw,22px);min-width:0}
+.marca .logo{width:clamp(70px,8vw,150px);height:auto;flex:none}
+.marca small{display:block;font-family:var(--display);font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--ball);font-size:clamp(.85rem,1.15vw,1.5rem)}
+h1{text-shadow:0 2px 20px rgba(0,0,0,.65);margin:0;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(2rem,4.4vw,5.2rem);line-height:.9;text-wrap:balance}
+h1 em{font-style:normal;color:var(--ball)}
+.meta{background:var(--panel);border-radius:999px;padding:.35em 1em;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;color:var(--muted);font-size:clamp(.85rem,1.05vw,1.3rem)}
+.meta b{color:var(--line);font-family:var(--display);font-size:1.5em;font-weight:800}
+button{cursor:pointer;font:inherit;color:var(--line);border:1px solid var(--rule);background:rgba(255,255,255,.08);border-radius:999px;padding:.4em 1em;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+button:hover{border-color:var(--line)}
+button:focus-visible{outline:3px solid var(--ball);outline-offset:2px}
+
+main{display:grid;gap:clamp(12px,1.6vw,28px);min-width:0}
+.col{display:flex;flex-direction:column;gap:clamp(12px,1.6vh,22px);min-width:0}
+h2{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:clamp(.95rem,1.25vw,1.6rem);color:var(--muted)}
+
+.podio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1vw,18px);align-items:end;flex:1}
+.podio .c{position:relative;border-radius:22px;padding:clamp(12px,1.4vw,26px);background:var(--panel);border:2px solid var(--k);box-shadow:0 0 0 1px rgba(0,0,0,.2),0 18px 40px -18px var(--k);display:flex;flex-direction:column;gap:.3em;min-width:0;animation:entra .7s both}
+.podio .c1{--k:var(--oro);order:2;padding-block:clamp(22px,4.2vh,60px)}
+.podio .c2{--k:var(--plata);order:1}
+.podio .c3{--k:var(--bronce);order:3}
+.medalla{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,2.6vw,3.4rem);line-height:1;color:var(--deep);background:var(--k);width:1.5em;height:1.5em;border-radius:50%;display:grid;place-items:center}
+.podio .nom{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(1.15rem,1.9vw,2.5rem);line-height:1;overflow-wrap:anywhere;text-wrap:balance}
+.podio .pts{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,5.4vw,7rem);line-height:.85;color:var(--k);font-variant-numeric:tabular-nums}
+.podio .pts small{font-size:.28em;letter-spacing:.14em;color:var(--line);margin-left:.3em}
+.podio .det{color:var(--muted);font-size:clamp(.8rem,.95vw,1.2rem)}
+
+.premios{display:grid;grid-template-columns:repeat(var(--pp,4),minmax(0,1fr));gap:clamp(8px,1vw,16px)}
+.premio{border-radius:18px;overflow:hidden;background:var(--panel);border:2px solid var(--k);display:flex;flex-direction:column;min-width:0;animation:entra .5s both}
+.premio .img{aspect-ratio:4/3;max-width:100%;background:var(--k);display:grid;place-items:center;overflow:hidden}
+.premio .img img,.premio .img video{width:100%;height:100%;object-fit:cover;display:block}
+.premio .img svg{width:44%;height:auto}
+.premio .interr{font-family:var(--display);font-weight:900;font-size:clamp(4rem,9vw,11rem);line-height:1;color:var(--deep)}
+.premio .txt{padding:clamp(8px,.9vw,16px);display:flex;flex-direction:column;gap:.15em;min-width:0}
+.premio .n{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(1.15rem,1.7vw,2.2rem);line-height:.95;overflow-wrap:anywhere}
+.premio .p{font-family:var(--display);font-weight:800;color:var(--k);font-size:clamp(1rem,1.3vw,1.7rem);font-variant-numeric:tabular-nums}
+.premio .s{color:var(--muted);font-size:clamp(.75rem,.85vw,1.05rem);line-height:1.2}
+.sumar{display:flex;flex-wrap:wrap;gap:8px clamp(10px,1.2vw,22px);align-items:center;font-size:clamp(.9rem,1.1vw,1.4rem)}
+.sumar span{display:inline-flex;align-items:baseline;gap:.4em}
+.sumar b{font-family:var(--display);font-weight:900;font-size:1.5em;color:var(--ball)}
+
+.tabla{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(10px,1.2vw,22px);display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;backdrop-filter:blur(6px)}
+.tcab{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:8px;border-bottom:3px solid var(--line)}
+.pagtxt{color:var(--muted);font-family:var(--display);font-weight:700;letter-spacing:.08em;white-space:nowrap;font-size:clamp(.85rem,1vw,1.3rem)}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dots button{width:14px;height:14px;padding:0;border-radius:50%;background:rgba(255,255,255,.2);border:0}
+.dots button[aria-current="true"]{background:var(--ball)}
+#lista{display:flex;flex-direction:column;flex:1;min-height:0}
+.fila{display:grid;grid-template-columns:clamp(2.4rem,3.4vw,4.6rem) clamp(2.4rem,2.8vw,3.6rem) auto minmax(0,1fr) auto;align-items:center;gap:clamp(6px,.8vw,16px);padding:clamp(5px,.7vh,10px) 4px;border-bottom:1px solid var(--rule);flex:1;animation:entra .5s both;font-variant-numeric:tabular-nums}
+.fila:last-child{border-bottom:0}
+.pos{font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,2.3vw,3rem);line-height:1;text-align:center;color:var(--muted)}
+.mov{font-family:var(--display);font-weight:800;font-size:clamp(.9rem,1.1vw,1.4rem);white-space:nowrap;text-align:center}
+.mov.up{color:var(--up)}.mov.down{color:var(--down)}.mov.eq{color:var(--muted)}
+.quien{min-width:0;display:flex;flex-direction:column;gap:4px}
+.quien .nom{font-weight:600;font-size:clamp(1rem,1.5vw,1.9rem);line-height:1.1;overflow-wrap:anywhere}
+.prog{display:flex;align-items:center;gap:10px;min-width:0}
+.barra{flex:1;height:clamp(6px,.8vh,10px);border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;min-width:40px}
+.barra i{display:block;height:100%;border-radius:99px;background:var(--k);transition:width .8s}
+.prog small{color:var(--muted);font-size:clamp(.72rem,.85vw,1.05rem);white-space:nowrap}
+.fila .pts{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,2.6vw,3.4rem);line-height:1;text-align:right;min-width:2.2ch}
+.av{--a:2.6rem;width:var(--a);height:var(--a);border-radius:50%;background:var(--k,var(--turq));color:var(--deep);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:calc(var(--a)*.42);line-height:1;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.fila .av{--a:clamp(2rem,2.7vw,3.4rem)}
+.podio .av{--a:clamp(3rem,5vw,6.5rem)}
+.cabp{display:flex;align-items:center;gap:.6em;flex-wrap:wrap}
+.pie{position:relative;margin-top:clamp(10px,2vh,36px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 28px;background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:clamp(10px,1.1vw,20px) clamp(14px,1.6vw,28px)}
+.qr span{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-size:clamp(.85rem,1.1vw,1.4rem)}
+.qr .tel{display:block;font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,2.2vw,2.8rem);line-height:1.05;margin-bottom:.15em;color:var(--ball);white-space:nowrap;font-variant-numeric:tabular-nums}
+.qr{display:flex;align-items:center;gap:clamp(10px,1.2vw,22px);min-width:0}
+.qr svg{width:clamp(84px,7vw,140px);height:auto;border-radius:10px;flex:none}
+.qr strong{display:block;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(1.3rem,2vw,2.6rem);line-height:1;overflow-wrap:anywhere}
+.vacio{margin:auto;text-align:center;color:var(--muted);padding:2em 0;font-size:1.1rem}
+.vacio b{display:block;color:var(--line);font-family:var(--display);font-size:2rem;text-transform:uppercase}
+
+@media (orientation:landscape) and (min-width:1000px) and (min-height:560px){
+  html,body{height:100%}
+  .wrap{min-height:100%}
+  main{grid-template-columns:1.08fr 1fr;flex:1}
+}
+@media (max-width:999px){
+  .podio{grid-template-columns:1fr}
+  .podio .c1{order:1;padding-block:18px}.podio .c2{order:2}.podio .c3{order:3}
+  .prog small{white-space:normal}
+}
+:fullscreen #btnFull,:fullscreen #btnCanje{display:none}
+.politica{margin:-4px 0 0;color:var(--muted);font-size:clamp(.8rem,.95vw,1.2rem);line-height:1.25}
+.politica b{color:var(--ball);font-weight:600}
+.prog small.pend{color:var(--ball);font-weight:600}
+.etq{display:inline-block;margin-left:.5em;padding:.1em .55em;border-radius:999px;background:var(--ball);color:var(--deep);font-family:var(--display);font-weight:800;font-size:.7em;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
+#panel{width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:0;border:1px solid var(--rule);border-radius:20px;background:#0a1830;color:var(--line);font-family:var(--body)}
+#panel::backdrop{background:rgba(2,6,14,.72)}
+.pcab{position:sticky;top:0;background:#0a1830;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--rule)}
+.pcab h3{margin:0;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.6rem}
+.pcuerpo{padding:12px 18px 18px;display:flex;flex-direction:column;gap:8px}
+.pcuerpo .ayuda{color:var(--muted);font-size:.9rem;margin:0 0 6px}
+.pbusca{width:100%;box-sizing:border-box;font:inherit;color:var(--line);background:rgba(255,255,255,.06);border:1px solid var(--rule);border-radius:12px;padding:.6em .9em}
+.pfila{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--rule)}
+.pfila.pend{border-color:var(--ball);background:rgba(220,245,58,.07)}
+.pfila .pn{font-weight:600;overflow-wrap:anywhere}
+.pfila .pd{grid-column:1/-1;color:var(--muted);font-size:.85rem;line-height:1.3}
+.pfila .acc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pfila .acc .si{background:var(--ball);color:var(--deep);border-color:var(--ball)}
+.pfila .acc button[disabled]{opacity:.4;cursor:default}
+.podio .etq{display:block;width:fit-content;margin:.35em 0 0;font-size:clamp(.7rem,.9vw,1.1rem)}
+.paviso.mal{color:var(--coral)}
+.paviso{color:var(--ball);font-size:.9rem;min-height:1.2em;margin:0}
+@media (orientation:portrait) and (min-width:700px) and (min-height:1000px){
+  html,body{height:100%}
+  .wrap{min-height:100%}
+  main{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;flex:1}
+  .podio{grid-template-columns:repeat(3,minmax(0,1fr));flex:none}
+  .podio .c1{order:2;padding-block:2.2vh}.podio .c2{order:1}.podio .c3{order:3}
+  h1{font-size:8.4vw}.marca small{font-size:2.4vw}.marca .logo{width:17vw}
+  .qr .tel{font-size:4.6vw}.qr span{font-size:1.8vw}.qr strong{font-size:3.4vw}.qr svg{width:15vw}
+  .pie .sumar{flex:1 1 40%}.meta{font-size:2vw}
+  h2{font-size:2.3vw}
+  .podio .nom{font-size:2.9vw}.podio .pts{font-size:7.6vw}.medalla{font-size:3.8vw}.premio .img{aspect-ratio:16/9}
+  .premio .n{font-size:2.9vw}.premio .p{font-size:2.3vw}.premio .s{font-size:1.6vw}
+  .sumar{font-size:2vw}
+  .fila{grid-template-columns:7vw 6vw auto minmax(0,1fr) auto}
+  .fila .av{--a:4.4vw}.podio .av{--a:8vw}
+  .pos{font-size:3.8vw}.quien .nom{font-size:2.7vw}.fila .pts{font-size:4.2vw}.mov{font-size:2vw}.prog small{font-size:1.6vw;white-space:nowrap}
+}
+</style>
+
+<div class="bg" aria-hidden="true"><div class="foto"></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="agujeros" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="2.6" fill="#06183a"/></pattern>
+    <g id="pala">
+      <rect x="51" y="140" width="18" height="74" rx="8" fill="#f6f9ff"/>
+      <path d="M60 4C26 4 6 30 6 66c0 34 22 62 42 78h24c20-16 42-44 42-78C114 30 94 4 60 4Z" fill="#dcf53a"/>
+      <path d="M60 16C34 16 18 38 18 66c0 26 16 48 32 62h20c16-14 32-36 32-62 0-28-16-50-42-50Z" fill="url(#agujeros)"/>
+      <path d="M48 144h24l-3 12H51Z" fill="#06183a"/>
+    </g>
+    <g id="regalo" fill="none" stroke="#06183a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="12" y="42" width="76" height="46" rx="4"/><rect x="6" y="26" width="88" height="16" rx="4"/>
+      <path d="M50 26v62M50 26c-10-18-30-14-22 0M50 26c10-18 30-14 22 0"/>
+    </g>
+    <g id="bola">
+      <circle cx="20" cy="20" r="19" fill="#dcf53a"/>
+      <path d="M5 9c8 6 8 16 0 22M35 9c-8 6-8 16 0 22" fill="none" stroke="#f6f9ff" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="marca">
+      <img class="logo" alt="Altomira Pádel VIP" src="data:image/webp;base64,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">
+      <div><small>Altomira Pádel VIP</small><h1>Ranking del club <em id="temp">2026</em></h1></div>
+    </div>
+    <div class="meta"><span><b id="nJug">–</b> jugadores sumando</span><span id="act"></span><button type="button" id="btnCanje" hidden>Canjes</button><button type="button" id="btnFull">Pantalla completa</button></div>
+  </header>
+
+  <main>
+    <div class="col">
+      <h2>Podio</h2>
+      <div class="podio" id="podio"><div class="vacio" style="grid-column:1/-1"><b>Cargando ranking</b>El podio aparecerá aquí.</div></div>
+      <h2 id="tPremios">Premios por puntos</h2>
+      <p class="politica"><b>Premios de uno en uno y en orden.</b> Recoge tu premio en recepción para optar al siguiente.</p>
+      <div class="premios" id="premios"></div>
+    </div>
+    <div class="col">
+      <div class="tabla">
+        <div class="tcab"><h2 id="rango">Clasificación</h2><div class="dots" id="dots"></div></div>
+        <div id="lista"><div class="vacio"><b>Cargando ranking</b>Los jugadores aparecerán aquí ordenados por puntos.</div></div>
+      </div>
+    </div>
+  </main>
+  <footer class="pie">
+    <div class="sumar" id="sumar"></div>
+    <div class="qr"><div id="qr"></div><div><span>Reservas de pádel</span><b class="tel">621 191 756</b><span>Reserva tu pista desde el móvil</span><strong>altomira.taykus.com</strong></div></div>
+  </footer>
+</div>
+<dialog id="panel" aria-labelledby="pTit">
+  <div class="pcab"><h3 id="pTit">Canje de premios</h3><button type="button" id="pCerrar">Cerrar</button></div>
+  <div class="pcuerpo">
+    <p class="ayuda">Los premios se recogen de uno en uno y en orden. Marca aquí cuando un jugador recoja el suyo; hasta entonces no puede optar al siguiente. Los puntos del ranking no cambian.</p>
+    <input class="pbusca" id="pBusca" type="search" placeholder="Buscar jugador" aria-label="Buscar jugador">
+    <p class="paviso" id="pAviso" role="status"></p>
+    <div id="pLista"></div>
+  </div>
+</dialog>
+
+<script>
+const $=id=>document.getElementById(id);
+const h=(tag,props,...kids)=>{const e=document.createElement(tag);Object.assign(e,props||{});kids.flat().forEach(k=>k!=null&&e.append(k));return e};
+const COL=['var(--turq)','var(--coral)','var(--ball)','var(--magenta)'];
+const DATOS={"club/ranking": {"season": "2026/27", "from": "2026-11-01", "to": "2027-12-31", "updated": "2026-10-20T21:00:00+02:00", "total": 0, "points": 0, "players": [], "prev": {}}, "club/config": {"prizes": ["Braga de cuello|50||", "Camiseta exclusiva Club Pádel Altomira|100|media/camiseta.mp4|video", "Toalla|200||", "Bidón|300||", "Mochila|400||", "Premio sorpresa|500|?|", "Próximamente|600||", "Próximamente|700||", "Próximamente|800||", "Próximamente|900||", "Premio sorpresa|1000|?|"], "rules": ["Partido|10", "Clase|10", "Partido de liga|15", "Pozo|15", "Mini torneo o torneo express|20", "Torneo grande|40"]}};
+const SEG=9000,TOP=Infinity,NS='http://www.w3.org/2000/svg';
+const FIJO='(orientation:landscape) and (min-width:1000px) and (min-height:560px), (orientation:portrait) and (min-width:700px) and (min-height:1000px)';
+let canjes={},puedeCanjear=false,dbReal=null,guardando=false,fotos={},jug=[],prev={},premios=[],reglas=[],pag=0,ppag=0,timer=null,estado='cargando';
+
+const cap=s=>String(s||'').trim().toLocaleLowerCase('es').replace(/(^|[\s\-(])(\p{L})/gu,(m,a,b)=>a+b.toLocaleUpperCase('es'));
+const par=s=>{const a=String(s).split('|');const img=(a[2]||'').trim();return{n:a[0],p:+a[1]||0,sorpresa:(a[2]||'').trim()==='?',vid:(a[3]||'').trim()==='video',img:/^(media\/|\/_blob\/|data:image\/)/.test(img)?img:''}};
+const porPag=()=>{const L=$('lista');if(!matchMedia(FIJO).matches)return 10;const alto=innerHeight-(document.querySelector('.wrap').scrollHeight-L.clientHeight)-8,v=matchMedia('(orientation:portrait)').matches;const fila=v?Math.max(innerHeight*.034,innerWidth*.066):innerHeight*.075;return Math.max(3,Math.floor(alto/Math.max(44,fila)))};
+const jugador=s=>{const a=String(s).split('|');return{id:a[0],n:cap(a[1])||'Sin nombre',p:+a[2]||0,m:[+a[3]||0,+a[4]||0,+a[5]||0,+a[6]||0,+a[7]||0]}};
+const detalle=j=>['partidos','clases','pozos','torneos express','torneos'].map((t,i)=>j.m[i]?j.m[i]+' '+t:null).filter(Boolean).join(' · ');
+const recogidos=j=>{const r=canjes[j.id];return Array.isArray(r)?r.length:0};
+// Estado de canje: premio siguiente en orden y si ya está listo para recoger.
+const siguiente=j=>{const i=recogidos(j);if(i>=premios.length)return null;return{...premios[i],i,k:COL[i%COL.length],listo:j.p>=premios[i].p}};
+
+function avatar(j,color){const e=h('div',{className:'av'}),f=fotos[j.id],ini=j.n.split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+  if(typeof f==='string'&&/^(\/_blob\/|data:image\/)/.test(f)){const im=h('img',{alt:'',src:f});im.onerror=()=>e.replaceChildren(ini);e.append(im)}else e.append(ini);
+  if(color)e.style.setProperty('--k',COL[(+j.id||0)%COL.length]);return e}
+function pintaPodio(){
+  const top=jug.filter(j=>j.p>0).slice(0,3),box=$('podio');
+  if(!top.length){const t=estado==='cargando'?['Cargando ranking','El podio aparecerá aquí.']:estado==='sin'?['Ranking no disponible','Abre esta página con tu cuenta de Claude.']:['Empieza el 1 de noviembre','Temporada noviembre 2026 – diciembre 2027. El podio se llenará con los primeros puntos.'];
+    box.replaceChildren(h('div',{className:'vacio',style:'grid-column:1/-1'},h('b',{textContent:t[0]}),t[1]));return}
+  box.replaceChildren(...top.map((j,i)=>h('div',{className:'c c'+(i+1)},h('div',{className:'cabp'},h('div',{className:'medalla',textContent:i+1}),avatar(j,false)),
+    h('div',{className:'nom'},j.n,(()=>{const s=siguiente(j);return s&&s.listo?h('span',{className:'etq',textContent:'Premio pendiente'}):null})()),h('div',{className:'pts'},String(j.p),h('small',{textContent:'PUNTOS'})))));
+}
+function pintaPremios(){
+  const box=$('premios'),lider=jug[0]?jug[0].p:0;
+  const pp=Math.max(2,Math.min(6,Math.floor(box.clientWidth/220)||4)),pags=Math.max(1,Math.ceil(premios.length/pp));if(ppag>=pags)ppag=0;
+  box.style.setProperty('--pp',Math.max(1,Math.min(pp,premios.length)));
+  $('tPremios').textContent='Premios por puntos'+(pags>1?` · ${ppag+1} de ${pags}`:'');
+  const firma=JSON.stringify([ppag,pp,premios,reglas,jug.slice(0,TOP).map(j=>j.p),canjes]);if(firma===box.dataset.f)return;box.dataset.f=firma;
+  box.replaceChildren(...premios.slice(ppag*pp,ppag*pp+pp).map((x,i)=>{const idx=ppag*pp+i,rec=jug.filter(j=>recogidos(j)>idx).length,pen=jug.filter(j=>{const s=siguiente(j);return s&&s.i===idx&&s.listo}).length,n=rec+pen,marco=h('div',{className:'img'});
+    if(x.sorpresa)marco.append(h('span',{className:'interr',textContent:'?'}));
+    else if(x.img&&x.vid)video(x,marco);
+    else if(x.img){const im=h('img',{alt:x.n,src:x.img});im.onerror=()=>marco.replaceChildren(regalo());marco.append(im)}else marco.append(regalo());
+    const e=h('div',{className:'premio'},marco,h('div',{className:'txt'},h('div',{className:'n',textContent:x.n}),h('div',{className:'p',textContent:x.p.toLocaleString('es-ES')+' puntos'}),
+      h('div',{className:'s',textContent:n?[rec?(rec===1?'1 recogido':rec+' recogidos'):null,pen?(pen===1?'1 pendiente de recoger':pen+' pendientes de recoger'):null].filter(Boolean).join(' · '):jug.length&&lider<x.p?'El líder está a '+(x.p-lider).toLocaleString('es-ES')+' puntos':'Todavía sin dueño'})));
+    e.style.setProperty('--k',COL[(ppag*pp+i)%COL.length]);return e}));
+  $('sumar').replaceChildren(...(reglas.length?[h('h2',{textContent:'Cómo sumar'})]:[]),...reglas.map(r=>h('span',{},h('b',{textContent:'+'+r.p}),r.n)));
+}
+function video(x,marco){const v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.loop=true;v.autoplay=true;v.preload='auto';v.setAttribute('aria-label',x.n);
+  let alt=false;v.onerror=async()=>{if(alt){marco.replaceChildren(regalo());return}alt=true;
+    try{const r=await fetch(x.img);if(!r.ok)throw 0;v.src=URL.createObjectURL(new Blob([await r.blob()],{type:'video/mp4'}));v.play().catch(()=>{})}catch(e){marco.replaceChildren(regalo())}};
+  marco.append(v);v.src=x.img;v.play().catch(()=>{})}
+function regalo(){const v=document.createElementNS(NS,'svg');v.setAttribute('viewBox','0 0 100 100');v.setAttribute('aria-hidden','true');const u=document.createElementNS(NS,'use');u.setAttribute('href','#regalo');v.append(u);return v}
+function pintaLista(){
+  const POR_PAG=porPag(),base=jug[0]&&jug[0].p>0?3:0,resto=jug.slice(base,TOP),pags=Math.max(1,Math.ceil(resto.length/POR_PAG));if(pag>=pags)pag=0;
+  const ini=pag*POR_PAG,trozo=resto.slice(ini,ini+POR_PAG),lista=$('lista');
+  $('rango').textContent=trozo.length?`Puestos ${ini+base+1} al ${ini+base+trozo.length}`:'Clasificación';
+  $('dots').replaceChildren(...(pags>12?[h('span',{className:'pagtxt',textContent:'Página '+(pag+1)+' de '+pags})]:pags>1?Array.from({length:pags},(_,i)=>{const b=h('button',{type:'button',onclick:()=>{pag=i;pintaLista();ciclo()}});b.setAttribute('aria-label','Página '+(i+1));b.setAttribute('aria-current',i===pag);return b}):[]));
+  if(!trozo.length){lista.replaceChildren(h('div',{className:'vacio'},h('b',{textContent:jug.length?'Solo hay podio':estado==='sin'?'Ranking no disponible':estado==='ok'?'Aún nadie suma puntos':'Cargando ranking'}),jug.length?'El resto de puestos aparecerá cuando más jugadores sumen puntos.':estado==='ok'?'Cada jugador aparecerá aquí en cuanto sume su primer punto.':'Los jugadores aparecerán aquí ordenados por puntos.'));return}
+  lista.replaceChildren(...trozo.map((j,i)=>{const pos=ini+base+1+i,d=prev[j.id]?prev[j.id]-pos:0,s=siguiente(j);
+    const mov=h('div',{className:'mov '+(d>0?'up':d<0?'down':'eq'),textContent:d>0?'▲'+d:d<0?'▼'+(-d):'–'});mov.setAttribute('aria-label',d>0?'Sube '+d:d<0?'Baja '+(-d):'Se mantiene');
+    const bar=h('i');bar.style.width=(s?Math.min(100,Math.round(j.p/s.p*100)):100)+'%';
+    const txt=!s?'Todos los premios recogidos':s.listo?(s.n+' listo para recoger en recepción'):`Faltan ${s.p-j.p} para ${s.n}`;
+    const prog=h('div',{className:'prog'},h('div',{className:'barra'},bar),h('small',{className:s&&s.listo?'pend':'',textContent:txt}));
+    prog.style.setProperty('--k',s?s.k:'var(--ball)');
+    const f=h('div',{className:'fila'},h('div',{className:'pos',textContent:pos}),mov,avatar(j,true),h('div',{className:'quien'},h('div',{className:'nom'},j.n,s&&s.listo?h('span',{className:'etq',textContent:'Premio pendiente'}):null),premios.length?prog:null),h('div',{className:'pts',textContent:j.p}));
+    f.style.animationDelay=(i*45)+'ms';return f}));
+}
+function ciclo(){clearInterval(timer);timer=setInterval(()=>{if(document.hidden)return;pag++;ppag++;pintaPremios();pintaLista()},SEG)}
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(todo,200)});
+function todo(){pintaPodio();pintaPremios();pintaLista();if($('panel').open)pintaPanel()}
+
+// ---- Panel de canjes (solo editores) ----
+function pintaPanel(){
+  const q=$('pBusca').value.trim().toLocaleLowerCase('es'),L=$('pLista');
+  const lista=jug.filter(j=>!q||j.n.toLocaleLowerCase('es').includes(q)).map(j=>({j,s:siguiente(j)}))
+    .sort((a,b)=>(b.s&&b.s.listo?1:0)-(a.s&&a.s.listo?1:0)||b.j.p-a.j.p);
+  if(!premios.length){L.replaceChildren(h('p',{className:'ayuda',textContent:'No hay premios configurados.'}));return}
+  if(!lista.length){L.replaceChildren(h('p',{className:'ayuda',textContent:jug.length?'Ningún jugador coincide con la búsqueda.':'Aún no hay jugadores con puntos.'}));return}
+  L.replaceChildren(...lista.map(({j,s})=>{const r=canjes[j.id]||[],hechos=r.map(x=>{const pr=premios[x.i];const f=x.at?new Date(x.at):null;return (pr?pr.n:'Premio')+(f&&!isNaN(f)?' ('+f.toLocaleDateString('es-ES',{day:'numeric',month:'short'})+')':'')});
+    const marcar=h('button',{type:'button',className:'si',textContent:s?'Recoge '+s.n:'Completado',disabled:!(s&&s.listo)||guardando,onclick:()=>cambia(j,+1,marcar)});
+    const deshacer=h('button',{type:'button',textContent:'Deshacer',disabled:!r.length||guardando,onclick:()=>cambia(j,-1,deshacer)});
+    const est=!s?'Todos los premios recogidos.':s.listo?'Listo para recoger: '+s.n+'.':'Siguiente: '+s.n+' (faltan '+(s.p-j.p)+' puntos).';
+    return h('div',{className:'pfila'+(s&&s.listo?' pend':'')},h('div',{className:'pn',textContent:j.n+' · '+j.p+' pts'}),h('div',{className:'acc'},deshacer,marcar),
+      h('div',{className:'pd',textContent:est+(hechos.length?' Recogidos: '+hechos.join(', ')+'.':' Aún no ha recogido ninguno.')}))}));
+}
+let pendConf=null;
+async function cambia(j,d,btn){
+  if(!dbReal||guardando)return;
+  // Doble pulsación para confirmar
+  if(pendConf!==btn){if(pendConf)pendConf.textContent=pendConf.dataset.t;pendConf=btn;btn.dataset.t=btn.textContent;btn.textContent='¿Seguro? Pulsa otra vez';return}
+  pendConf=null;
+  const r=(canjes[j.id]||[]).slice();
+  if(d>0){const s=siguiente(j);if(!s||!s.listo)return;r.push({i:s.i,at:new Date().toISOString()})}else r.pop();
+  const nuevo={...canjes};if(r.length)nuevo[j.id]=r;else delete nuevo[j.id];
+  guardando=true;$('pAviso').classList.remove('mal');$('pAviso').textContent='Guardando…';pintaPanel();
+  try{await dbReal.doc('club/canjes').set({r:nuevo});canjes=nuevo;$('pAviso').textContent=d>0?'Marcado: '+j.n+' ha recogido su premio.':'Deshecho el último canje de '+j.n+'.'}
+  catch(e){$('pAviso').classList.add('mal');$('pAviso').textContent=e&&e.code==='invalid_argument'?'No tienes permiso para registrar canjes.':'No se pudo guardar. Inténtalo de nuevo.'}
+  guardando=false;todo();
+}
+$('btnCanje').onclick=()=>{$('pAviso').textContent='';pintaPanel();$('panel').showModal()};
+$('pCerrar').onclick=()=>$('panel').close();
+$('pBusca').oninput=()=>pintaPanel();
+
+const reanuda=()=>document.querySelectorAll('video').forEach(v=>{if(v.paused)v.play().catch(()=>{})});
+['pointerdown','keydown','visibilitychange'].forEach(e=>document.addEventListener(e,reanuda));setInterval(reanuda,4000);
+let lock=null;
+$('btnFull').onclick=()=>{document.documentElement.requestFullscreen?.().catch(()=>{});navigator.wakeLock?.request('screen').then(l=>lock=l).catch(()=>{})};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lock)navigator.wakeLock?.request('screen').then(l=>lock=l).catch(()=>{})});
+
+function pintaQR(){try{const q=qrcode(0,'M');q.addData('https://altomira.taykus.com');q.make();const n=q.getModuleCount();let d='';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(q.isDark(y,x))d+=`M${x} ${y}h1v1h-1z`;
+  const v=document.createElementNS(NS,'svg');v.setAttribute('viewBox',`-2 -2 ${n+4} ${n+4}`);v.setAttribute('role','img');v.setAttribute('aria-label','Código QR de altomira.taykus.com');
+  const r=document.createElementNS(NS,'rect');r.setAttribute('x',-2);r.setAttribute('y',-2);r.setAttribute('width',n+4);r.setAttribute('height',n+4);r.setAttribute('fill','#fff');
+  const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill','#06183a');v.append(r,p);$('qr').replaceChildren(v)}catch(e){}}
+async function inicio(){
+  pintaQR();
+  todo();ciclo();
+  const db={doc:p=>({onSnapshot:cb=>{cb({exists:!!DATOS[p],data:()=>DATOS[p]});return()=>{}}})};
+  if(!db){estado='sin';todo();return}
+  db.doc('club/ranking').onSnapshot(s=>{estado='ok';const x=(s.exists&&s.data())||{};
+    jug=(Array.isArray(x.players)?x.players:[]).map(jugador).filter(j=>j.p>0).sort((a,b)=>b.p-a.p||a.n.localeCompare(b.n,'es'));
+    prev=(x.prev&&typeof x.prev==='object')?x.prev:{};
+    if(x.season)$('temp').textContent=String(x.season);
+    $('nJug').textContent=jug.length.toLocaleString('es-ES');
+    const f=x.updated?new Date(x.updated):null;
+    $('act').textContent=f&&!isNaN(f)?'Actualizado el '+f.toLocaleDateString('es-ES',{day:'numeric',month:'long'})+' a las '+f.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}):'';
+    todo()},()=>{estado='sin';jug=[];todo()});
+  db.doc('club/fotos').onSnapshot(s=>{const x=(s.exists&&s.data())||{};fotos=(x.f&&typeof x.f==='object')?x.f:{};todo()},()=>{});
+  (async()=>{try{const real=await window.claude?.use?.('db');if(!real)return;dbReal=real;
+    real.doc('club/canjes').onSnapshot(s=>{const x=(s.exists&&s.data())||{};canjes=(x.r&&typeof x.r==='object')?x.r:{};todo()},()=>{});
+    const u=await window.claude.use('user');puedeCanjear=!!(u&&await u.canEdit());$('btnCanje').hidden=!puedeCanjear}catch(e){}})();
+  db.doc('club/config').onSnapshot(s=>{const x=(s.exists&&s.data())||{};
+    premios=(Array.isArray(x.prizes)?x.prizes:[]).map(par).filter(p=>p.n&&p.p>0).sort((a,b)=>a.p-b.p);
+    reglas=(Array.isArray(x.rules)?x.rules:[]).map(par).filter(r=>r.n);todo()},()=>{});
+}
+inicio();
+</script>
+
+</body></html>
